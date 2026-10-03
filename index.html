@@ -43,12 +43,67 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 8px
 <input type="hidden" id="id">
 <div class="grid">
 <div class="field"><label>NOME COMPLETO</label><input id="nome" required></div>
+
 <div class="field"><label>TELEFONE</label><input id="telefone" placeholder="(55) 99999-9999"></div>
-<div class="field"><label>INSTRUMENTO</label><select id="instrumento" required><option value="">Selecione</option><option>Surdo de 1ª</option><option>Surdo de 2ª</option><option>Surdo de 3ª</option><option>Repique</option><option>Caixa</option><option>Tamborim</option><option>Agogô</option><option>Chocalho</option><option>Cuíca</option><option>Outro</option></select></div>
-<div class="field"><label>TAMANHO CAMISETA</label><select id="camiseta"><option value="">Selecione</option><option>P</option><option>M</option><option>G</option><option>GG</option><option>EXG</option><option>G1</option><option>G2</option><option>G3</option></select></div>
-<div class="field"><label>TAMANHO FANTASIA</label><select id="fantasia"><option value="">Selecione</option><option>P</option><option>M</option><option>G</option><option>GG</option><option>G3</option></select></div>
-<div class="field"><label>NÚMERO DO CALÇADO</label><input id="calcado" type="number" min="20" max="55"></div>
-<div class="field full"><label>OBSERVAÇÕES</label><input id="obs" placeholder="Ex.: diretor, naipe, observações..."></div>
+
+<div class="field">
+<label>FOTO</label>
+<input id="foto" type="file" accept="image/*">
+</div>
+
+<div class="field">
+<label>INSTRUMENTO</label>
+<select id="instrumento" required>
+<option value="">Selecione</option>
+<option>Surdo de 1ª</option>
+<option>Surdo de 2ª</option>
+<option>Surdo de 3ª</option>
+<option>Repique</option>
+<option>Caixa</option>
+<option>Tamborim</option>
+<option>Agogô</option>
+<option>Chocalho</option>
+<option>Cuíca</option>
+<option>Outro</option>
+</select>
+</div>
+
+<div class="field">
+<label>TAMANHO CAMISETA</label>
+<select id="camiseta">
+<option value="">Selecione</option>
+<option>P</option>
+<option>M</option>
+<option>G</option>
+<option>GG</option>
+<option>EXG</option>
+<option>G1</option>
+<option>G2</option>
+<option>G3</option>
+</select>
+</div>
+
+<div class="field">
+<label>TAMANHO FANTASIA</label>
+<select id="fantasia">
+<option value="">Selecione</option>
+<option>P</option>
+<option>M</option>
+<option>G</option>
+<option>GG</option>
+<option>G3</option>
+</select>
+</div>
+
+<div class="field">
+<label>NÚMERO DO CALÇADO</label>
+<input id="calcado" type="number" min="20" max="55">
+</div>
+
+<div class="field full">
+<label>OBSERVAÇÕES</label>
+<input id="obs" placeholder="Ex.: diretor, naipe, observações...">
+</div>
 </div>
 <div class="footer-actions"><button type="button" class="secondary" onclick="closeModal()">Cancelar</button><button class="primary">Salvar ritmista</button></div>
 </form></div></div>
