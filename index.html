@@ -43,6 +43,14 @@ table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 8px
 <input type="hidden" id="id">
 <div class="grid">
 <div class="field"><label>NOME COMPLETO</label><input id="nome" required></div>
+ <div class="field"><label>APELIDO</label><input id="apelido"></div>
+ <div class="field"><label>CPF</label><input id="cpf" placeholder="000.000.000-00"></div>
+ <div class="field"><label>DATA DE NASCIMENTO</label><input id="nascimento" type="date" required></div>
+ <div class="field"><label>CEP</label><input id="cep" placeholder="00000-000"></div>
+ <div class="field"><label>RUA</label><input id="rua"></div>
+ <div class="field"><label>NÚMERO</label><input id="numero"></div>
+ <div class="field"><label>BAIRRO</label><input id="bairro"></div>
+ <div class="field"><label>CIDADE</label><input id="cidade"></div>
 
 <div class="field"><label>TELEFONE</label><input id="telefone" placeholder="(55) 99999-9999"></div>
 
@@ -115,12 +123,12 @@ const $=id=>document.getElementById(id);
 function persist(){localStorage.setItem(KEY,JSON.stringify(data));}
 function openModal(item=null){
  $('modal').classList.add('open'); $('modalTitle').textContent=item?'Editar ritmista':'Novo ritmista';
- $('id').value=item?.id||''; $('nome').value=item?.nome||''; $('telefone').value=item?.telefone||'';
+ $('id').value=item?.id||''; $('nome').value=item?.nome||''; $('apelido').value=item?.apelido||''; $('telefone').value=item?.telefone||'';
  $('instrumento').value=item?.instrumento||''; $('camiseta').value=item?.camiseta||''; $('fantasia').value=item?.fantasia||'';
  $('calcado').value=item?.calcado||''; $('obs').value=item?.obs||'';
 }
 function closeModal(){$('modal').classList.remove('open');$('form').reset();$('id').value='';}
-function save(e){e.preventDefault();let id=$('id').value||crypto.randomUUID();let obj={id,nome:$('nome').value.trim(),telefone:$('telefone').value.trim(),instrumento:$('instrumento').value,camiseta:$('camiseta').value,fantasia:$('fantasia').value,calcado:$('calcado').value,obs:$('obs').value.trim(),presente:false};
+nome:$('nome').value.trim(),apelido:$('apelido').value.trim(),telefone:
 let old=data.find(x=>x.id===id);if(old)obj.presente=old.presente;
 let idx=data.findIndex(x=>x.id===id);if(idx>=0)data[idx]=obj;else data.push(obj);persist();closeModal();render();}
 function togglePresenca(id){let x=data.find(x=>x.id===id);x.presente=!x.presente;persist();render();}
@@ -128,7 +136,7 @@ function del(id){if(confirm('Excluir este ritmista?')){data=data.filter(x=>x.id!
 function edit(id){openModal(data.find(x=>x.id===id));}
 function render(){
  let q=$('search').value.toLowerCase(), f=$('filter').value;
- let list=data.filter(x=>(!q||[x.nome,x.telefone,x.instrumento].join(' ').toLowerCase().includes(q))&&(!f||x.instrumento===f));
+ let list=data.filter(x=>(q||[x.nome,x.apelido,x.telefone,x.instrumento]...
  let opts=[...new Set(data.map(x=>x.instrumento).filter(Boolean))].sort();$('filter').innerHTML='<option value="">Todos os instrumentos</option>'+opts.map(x=>`<option ${x===f?'selected':''}>${x}</option>`).join('');
  $('tbody').innerHTML=list.length?list.map(x=>`<tr><td><b>${esc(x.nome)}</b><br><small>${esc(x.telefone||'')}</small></td><td>${esc(x.instrumento)}</td><td>${esc(x.camiseta||'—')}</td><td>${esc(x.fantasia||'—')}</td><td>${esc(x.calcado||'—')}</td><td><button class="${x.presente?'primary':'secondary'}" onclick="togglePresenca('${x.id}')">${x.presente?'✓ Presente':'Marcar'}</button></td><td><div class="actions"><button class="secondary" onclick="edit('${x.id}')">Editar</button><button class="danger" onclick="del('${x.id}')">Excluir</button></div></td></tr>`).join(''):'<tr><td colspan="7" class="empty">Nenhum ritmista cadastrado.</td></tr>';
  $('total').textContent=data.length;$('presentes').textContent=data.filter(x=>x.presente).length;$('camisetas').textContent=data.filter(x=>x.camiseta).length;$('instrumentos').textContent=new Set(data.map(x=>x.instrumento).filter(Boolean)).size;
