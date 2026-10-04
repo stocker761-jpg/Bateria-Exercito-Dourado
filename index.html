@@ -1,152 +1,1457 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#111111">
-<title>Exército Dourado | Gestão da Bateria</title>
-<style>
-:root{--gold:#d4af37;--gold2:#f0cf62;--bg:#0b0b0b;--card:#151515;--line:#292929;--text:#f5f5f5;--muted:#a8a8a8;--danger:#d9534f}
-*{box-sizing:border-box} body{margin:0;font-family:Inter,Arial,sans-serif;background:linear-gradient(145deg,#080808,#17130a);color:var(--text)}
-header{padding:24px 18px 18px;border-bottom:1px solid var(--line);background:rgba(0,0,0,.72);position:sticky;top:0;z-index:5;backdrop-filter:blur(10px)}
-.brand{display:flex;align-items:center;gap:14px;max-width:1100px;margin:auto}.logo{width:52px;height:52px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;font-size:25px}.brand h1{font-size:20px;margin:0}.brand p{font-size:12px;color:var(--muted);margin:3px 0 0}
-main{max-width:1100px;margin:auto;padding:20px 16px 50px}.hero{display:flex;justify-content:space-between;gap:15px;align-items:end;margin-bottom:18px}.hero h2{margin:0;font-size:27px}.hero p{color:var(--muted);margin:6px 0 0}
-button{border:0;border-radius:10px;padding:11px 15px;font-weight:700;cursor:pointer}.primary{background:var(--gold);color:#111}.secondary{background:#242424;color:#fff}.danger{background:#3a1717;color:#ff9d99}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}.stat{background:var(--card);border:1px solid var(--line);padding:16px;border-radius:14px}.stat b{font-size:25px}.stat span{display:block;color:var(--muted);font-size:12px;margin-top:4px}
-.panel{background:rgba(20,20,20,.9);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:16px}.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}.toolbar input{flex:1;min-width:220px}
-input,select{width:100%;background:#0e0e0e;border:1px solid #333;border-radius:9px;padding:12px;color:#fff;outline:none}input:focus,select:focus{border-color:var(--gold)}
-table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:12px 8px;border-bottom:1px solid var(--line);font-size:13px}th{color:var(--gold2);font-size:11px;text-transform:uppercase}td small{color:var(--muted)}.actions{display:flex;gap:6px}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;padding:18px;z-index:20}.modal.open{display:flex}.box{width:min(620px,100%);max-height:90vh;overflow:auto;background:#171717;border:1px solid #3b3b3b;border-radius:18px;padding:20px}.box h3{margin-top:0}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field label{font-size:11px;color:var(--muted);display:block;margin-bottom:6px}.full{grid-column:1/-1}.footer-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
-.empty{text-align:center;color:var(--muted);padding:30px}
-@media(max-width:720px){.stats{grid-template-columns:1fr 1fr}.hero{align-items:start;flex-direction:column}.grid{grid-template-columns:1fr}.full{grid-column:auto}table{min-width:760px}.panel{overflow-x:auto}}
-</style>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <meta
+    name="theme-color"
+    content="#111111"
+  >
+
+  <title>Exército Dourado | Gestão da Bateria</title>
+
+  <style>
+    :root {
+      --gold: #d4af37;
+      --gold-light: #f0cf62;
+      --bg: #080808;
+      --card: #151515;
+      --card2: #1d1d1d;
+      --line: #292929;
+      --text: #f5f5f5;
+      --muted: #a8a8a8;
+      --danger: #d9534f;
+      --green: #2e9d62;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        linear-gradient(
+          145deg,
+          #080808,
+          #17130a
+        );
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    header {
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.72);
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(8px);
+    }
+
+    .brand {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo {
+      width: 58px;
+      height: 58px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 20px;
+      color: var(--gold-light);
+      letter-spacing: .5px;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    main {
+      width: min(1100px, calc(100% - 28px));
+      margin: 28px auto 50px;
+    }
+
+    .hero {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
+    .hero h2 {
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .hero p {
+      margin: 6px 0 0;
+      color: var(--muted);
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    button.primary {
+      background: var(--gold);
+      color: #111;
+    }
+
+    button.primary:hover {
+      background: var(--gold-light);
+    }
+
+    button.secondary {
+      background: #292929;
+      color: #fff;
+    }
+
+    button.secondary:hover {
+      background: #373737;
+    }
+
+    button.danger {
+      background: rgba(217, 83, 79, .15);
+      color: #ff7772;
+      border: 1px solid rgba(217, 83, 79, .35);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 17px;
+    }
+
+    .stat b {
+      display: block;
+      font-size: 27px;
+      color: var(--gold-light);
+      margin-bottom: 5px;
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .panel {
+      background: rgba(20, 20, 20, .94);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+
+    .toolbar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar input,
+    .toolbar select {
+      flex: 1;
+      min-width: 220px;
+      background: #0e0e0e;
+      border: 1px solid #333;
+      border-radius: 9px;
+      padding: 12px;
+      color: #fff;
+      outline: none;
+    }
+
+    .toolbar input:focus,
+    .toolbar select:focus {
+      border-color: var(--gold);
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 900px;
+    }
+
+    th,
+    td {
+      text-align: left;
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    th {
+      color: var(--gold-light);
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    td small {
+      color: var(--muted);
+    }
+
+    .actions {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+    }
+
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 30px;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .76);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      z-index: 20;
+      overflow-y: auto;
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-box {
+      width: min(850px, 100%);
+      background: #161616;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .55);
+      max-height: 92vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
+    .modal-header h3 {
+      margin: 0;
+      color: var(--gold-light);
+    }
+
+    .close {
+      background: transparent;
+      color: #fff;
+      font-size: 24px;
+      padding: 4px 9px;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--gold-light);
+      text-transform: uppercase;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      background: #0d0d0d;
+      color: #fff;
+      border: 1px solid #363636;
+      border-radius: 9px;
+      padding: 12px;
+      outline: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: var(--gold);
+    }
+
+    .footer-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      padding-top: 5px;
+    }
+
+    .notice {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 720px) {
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .field.full {
+        grid-column: auto;
+      }
+
+      .brand h1 {
+        font-size: 17px;
+      }
+
+      .logo {
+        width: 48px;
+        height: 48px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header><div class="brand"><div class="logo"><img src="logo-bateria.jpeg" alt="Logo Bateria Exército Dourado"></div><div><h1>BATERIA EXÉRCITO DOURADO</h1>
-<main>
-<section class="hero"><div><h2>Painel da Bateria</h2><p>Controle dos ritmistas e informações da tropa.</p></div><button class="primary" onclick="openModal()">+ Novo ritmista</button></section>
-<section class="stats">
-<div class="stat"><b id="total">0</b><span>Ritmistas cadastrados</span></div>
-<div class="stat"><b id="presentes">0</b><span>Presença marcada</span></div>
-<div class="stat"><b id="camisetas">0</b><span>Camisas cadastradas</span></div>
-<div class="stat"><b id="instrumentos">0</b><span>Instrumentos</span></div>
-</section>
-<section class="panel">
-<div class="toolbar"><input id="search" placeholder="Buscar por nome, instrumento ou telefone..." oninput="render()"><select id="filter" onchange="render()"><option value="">Todos os instrumentos</option></select><button class="secondary" onclick="exportar()">Exportar CSV</button></div>
-<div style="overflow:auto"><table><thead><tr><th>Ritmista</th><th>Instrumento</th><th>Camiseta</th><th>Fantasia</th><th>Calçado</th><th>Presença</th><th>Ações</th></tr></thead><tbody id="tbody"></tbody></table></div>
-</section>
-</main>
 
-<div class="modal" id="modal"><div class="box">
-<h3 id="modalTitle">Novo ritmista</h3>
-<form id="form" onsubmit="save(event)">
-<input type="hidden" id="id">
-<div class="grid">
-<div class="field"><label>NOME COMPLETO</label><input id="nome" required></div>
- <div class="field"><label>APELIDO</label><input id="apelido"></div>
- <div class="field"><label>CPF</label><input id="cpf" placeholder="000.000.000-00"></div>
- <div class="field"><label>DATA DE NASCIMENTO</label><input id="nascimento" type="date" required></div>
- <div class="field"><label>CEP</label><input id="cep" placeholder="00000-000"></div>
- <div class="field"><label>RUA</label><input id="rua"></div>
- <div class="field"><label>NÚMERO</label><input id="numero"></div>
- <div class="field"><label>BAIRRO</label><input id="bairro"></div>
- <div class="field"><label>CIDADE</label><input id="cidade"></div>
+  <header>
+    <div class="brand">
 
-<div class="field"><label>TELEFONE</label><input id="telefone" placeholder="(55) 99999-9999"></div>
+      <div class="logo">
+        <img
+          src="logo-bateria.jpeg"
+          alt="Logo Bateria Exército Dourado"
+          onerror="this.style.display='none'"
+        >
+      </div>
 
-<div class="field">
-<label>FOTO</label>
-<input id="foto" type="file" accept="image/*">
-</div>
+      <div>
+        <h1>BATERIA EXÉRCITO DOURADO</h1>
+        <p>Gestão dos ritmistas e informações da tropa</p>
+      </div>
 
-<div class="field">
-<label>INSTRUMENTO</label>
-<select id="instrumento" required>
-<option value="">Selecione</option>
-<option>Surdo de 1ª</option>
-<option>Surdo de 2ª</option>
-<option>Surdo de 3ª</option>
-<option>Repique</option>
-<option>Caixa</option>
-<option>Tamborim</option>
-<option>Agogô</option>
-<option>Chocalho</option>
-<option>Cuíca</option>
-<option>Outro</option>
-</select>
-</div>
+    </div>
+  </header>
 
-<div class="field">
-<label>TAMANHO CAMISETA</label>
-<select id="camiseta">
-<option value="">Selecione</option>
-<option>P</option>
-<option>M</option>
-<option>G</option>
-<option>GG</option>
-<option>EXG</option>
-<option>G1</option>
-<option>G2</option>
-<option>G3</option>
-</select>
-</div>
+  <main>
 
-<div class="field">
-<label>TAMANHO FANTASIA</label>
-<select id="fantasia">
-<option value="">Selecione</option>
-<option>P</option>
-<option>M</option>
-<option>G</option>
-<option>GG</option>
-<option>G3</option>
-</select>
-</div>
+    <section class="hero">
 
-<div class="field">
-<label>NÚMERO DO CALÇADO</label>
-<input id="calcado" type="number" min="20" max="55">
-</div>
+      <div>
+        <h2>Painel da Bateria</h2>
+        <p>Controle dos ritmistas e informações da tropa.</p>
+      </div>
 
-<div class="field full">
-<label>OBSERVAÇÕES</label>
-<input id="obs" placeholder="Ex.: diretor, naipe, observações...">
-</div>
-</div>
-<div class="footer-actions"><button type="button" class="secondary" onclick="closeModal()">Cancelar</button><button class="primary">Salvar ritmista</button></div>
-</form></div></div>
+      <button
+        class="primary"
+        onclick="openModal()"
+      >
+        + Novo ritmista
+      </button>
 
-<script>
-const KEY='exercitoDouradoRitmistas';
-let data=JSON.parse(localStorage.getItem(KEY)||'[]');
-const $=id=>document.getElementById(id);
-function persist(){localStorage.setItem(KEY,JSON.stringify(data));}
-function openModal(item=null){
- $('modal').classList.add('open'); $('modalTitle').textContent=item?'Editar ritmista':'Novo ritmista';
- $('id').value=item?.id||''; $('nome').value=item?.nome||''; $('apelido').value=item?.apelido||''; $('telefone').value=item?.telefone||'';
- $('instrumento').value=item?.instrumento||''; $('camiseta').value=item?.camiseta||''; $('fantasia').value=item?.fantasia||'';
- $('calcado').value=item?.calcado||''; $('obs').value=item?.obs||'';
-}
-function closeModal(){$('modal').classList.remove('open');$('form').reset();$('id').value='';}
-nome:$('nome').value.trim(),apelido:$('apelido').value.trim(),telefone:
-let old=data.find(x=>x.id===id);if(old)obj.presente=old.presente;
-let idx=data.findIndex(x=>x.id===id);if(idx>=0)data[idx]=obj;else data.push(obj);persist();closeModal();render();}
-function togglePresenca(id){let x=data.find(x=>x.id===id);x.presente=!x.presente;persist();render();}
-function del(id){if(confirm('Excluir este ritmista?')){data=data.filter(x=>x.id!==id);persist();render();}}
-function edit(id){openModal(data.find(x=>x.id===id));}
-function render(){
- let q=$('search').value.toLowerCase(), f=$('filter').value;
- let list=data.filter(x=>(q||[x.nome,x.apelido,x.telefone,x.instrumento]...
- let opts=[...new Set(data.map(x=>x.instrumento).filter(Boolean))].sort();$('filter').innerHTML='<option value="">Todos os instrumentos</option>'+opts.map(x=>`<option ${x===f?'selected':''}>${x}</option>`).join('');
- $('tbody').innerHTML=list.length?list.map(x=>`<tr><td><b>${esc(x.nome)}</b><br><small>${esc(x.telefone||'')}</small></td><td>${esc(x.instrumento)}</td><td>${esc(x.camiseta||'—')}</td><td>${esc(x.fantasia||'—')}</td><td>${esc(x.calcado||'—')}</td><td><button class="${x.presente?'primary':'secondary'}" onclick="togglePresenca('${x.id}')">${x.presente?'✓ Presente':'Marcar'}</button></td><td><div class="actions"><button class="secondary" onclick="edit('${x.id}')">Editar</button><button class="danger" onclick="del('${x.id}')">Excluir</button></div></td></tr>`).join(''):'<tr><td colspan="7" class="empty">Nenhum ritmista cadastrado.</td></tr>';
- $('total').textContent=data.length;$('presentes').textContent=data.filter(x=>x.presente).length;$('camisetas').textContent=data.filter(x=>x.camiseta).length;$('instrumentos').textContent=new Set(data.map(x=>x.instrumento).filter(Boolean)).size;
-}
-function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
-function exportar(){
- let rows=[['Nome','Telefone','Instrumento','Camiseta','Fantasia','Calçado','Presença','Observações'],...data.map(x=>[x.nome,x.telefone,x.instrumento,x.camiseta,x.fantasia,x.calcado,x.presente?'Presente':'Não marcado',x.obs])];
- let csv=rows.map(r=>r.map(v=>`"${String(v??'').replaceAll('"','""')}"`).join(';')).join('\\n');
- let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='ritmistas-exercito-dourado.csv';a.click();
-}
-render();
-</script>
-</body></html>
+    </section>
+
+    <section class="stats">
+
+      <div class="stat">
+        <b id="total">0</b>
+        <span>Ritmistas cadastrados</span>
+      </div>
+
+      <div class="stat">
+        <b id="presentes">0</b>
+        <span>Presença marcada</span>
+      </div>
+
+      <div class="stat">
+        <b id="camisetas">0</b>
+        <span>Camisetas cadastradas</span>
+      </div>
+
+      <div class="stat">
+        <b id="instrumentos">0</b>
+        <span>Instrumentos</span>
+      </div>
+
+    </section>
+
+    <section class="panel">
+
+      <div class="toolbar">
+
+        <input
+          id="search"
+          type="search"
+          placeholder="Buscar por nome, CPF, instrumento ou celular..."
+        >
+
+        <select id="filter">
+          <option value="">Todos os instrumentos</option>
+        </select>
+
+        <button
+          class="secondary"
+          onclick="exportar()"
+        >
+          Exportar CSV
+        </button>
+
+      </div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Ritmista</th>
+              <th>Instrumento</th>
+              <th>Camiseta</th>
+              <th>Fantasia</th>
+              <th>Calçado</th>
+              <th>Presença</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="tbody"></tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- MODAL CADASTRO -->
+
+  <div
+    class="modal"
+    id="modal"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <h3 id="modalTitle">
+          Novo ritmista
+        </h3>
+
+        <button
+          type="button"
+          class="close"
+          onclick="closeModal()"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="form">
+
+        <input
+          type="hidden"
+          id="id"
+        >
+
+
+        <div class="form-grid">
+
+          <!-- DADOS PESSOAIS -->
+
+          <div class="field full">
+            <label>Nome completo</label>
+
+            <input
+              id="nome"
+              type="text"
+              placeholder="Digite o nome completo"
+              required
+            >
+          </div>
+
+
+          <div class="field">
+
+            <label>CPF</label>
+
+            <input
+              id="cpf"
+              type="text"
+              placeholder="000.000.000-00"
+              maxlength="14"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Data de nascimento</label>
+
+            <input
+              id="nascimento"
+              type="date"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>CEP</label>
+
+            <input
+              id="cep"
+              type="text"
+              placeholder="00000-000"
+              maxlength="9"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Número da residência</label>
+
+            <input
+              id="numero"
+              type="text"
+              placeholder="Número"
+            >
+
+          </div>
+
+
+          <div class="field full">
+
+            <label>Rua</label>
+
+            <input
+              id="rua"
+              type="text"
+              placeholder="Nome da rua"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Bairro</label>
+
+            <input
+              id="bairro"
+              type="text"
+              placeholder="Bairro"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Cidade</label>
+
+            <input
+              id="cidade"
+              type="text"
+              placeholder="Cidade"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Celular</label>
+
+            <input
+              id="celular"
+              type="tel"
+              placeholder="(00) 00000-0000"
+            >
+
+          </div>
+
+
+          <!-- DADOS DA BATERIA -->
+
+          <div class="field">
+
+            <label>Instrumento</label>
+
+            <select
+              id="instrumento"
+              required
+            >
+
+              <option value="">
+                Selecione
+              </option>
+
+              <option>Surdo de 1ª</option>
+              <option>Surdo de 2ª</option>
+              <option>Surdo de 3ª</option>
+              <option>Repique</option>
+              <option>Caixa</option>
+              <option>Tamborim</option>
+              <option>Agogô</option>
+              <option>Chocalho</option>
+              <option>Cuíca</option>
+              <option>Outro</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Tamanho camiseta</label>
+
+            <select id="camiseta">
+
+              <option value="">
+                Selecione
+              </option>
+
+              <option>P</option>
+              <option>M</option>
+              <option>G</option>
+              <option>GG</option>
+              <option>G3</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Tamanho fantasia</label>
+
+            <select id="fantasia">
+
+              <option value="">
+                Selecione
+              </option>
+
+              <option>P</option>
+              <option>M</option>
+              <option>G</option>
+              <option>GG</option>
+              <option>G3</option>
+
+            </select>
+
+          </div>
+
+
+          <div class="field">
+
+            <label>Número do calçado</label>
+
+            <input
+              id="calcado"
+              type="number"
+              min="20"
+              max="55"
+              placeholder="Ex.: 40"
+            >
+
+          </div>
+
+
+          <div class="field full">
+
+            <label>Observações</label>
+
+            <input
+              id="obs"
+              type="text"
+              placeholder="Ex.: diretor, naipe, observações..."
+            >
+
+          </div>
+
+        </div>
+
+
+        <div class="notice">
+          Os dados ficam salvos neste navegador.
+          Use a opção "Exportar CSV" para fazer uma cópia dos cadastros.
+        </div>
+
+
+        <div class="footer-actions">
+
+          <button
+            type="button"
+            class="secondary"
+            onclick="closeModal()"
+          >
+            Cancelar
+          </button>
+
+          <button
+            type="submit"
+            class="primary"
+          >
+            Salvar ritmista
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <script>
+
+    const KEY = 'exercitoDouradoRitmistas';
+
+    let data = JSON.parse(
+      localStorage.getItem(KEY) || '[]'
+    );
+
+
+    const $ = id =>
+      document.getElementById(id);
+
+
+    function persist() {
+
+      localStorage.setItem(
+        KEY,
+        JSON.stringify(data)
+      );
+
+    }
+
+
+    function openModal(item = null) {
+
+      $('modal').classList.add('open');
+
+      $('modalTitle').textContent =
+        item
+          ? 'Editar ritmista'
+          : 'Novo ritmista';
+
+
+      $('id').value =
+        item?.id || '';
+
+      $('nome').value =
+        item?.nome || '';
+
+      $('cpf').value =
+        item?.cpf || '';
+
+      $('nascimento').value =
+        item?.nascimento || '';
+
+      $('cep').value =
+        item?.cep || '';
+
+      $('rua').value =
+        item?.rua || '';
+
+      $('numero').value =
+        item?.numero || '';
+
+      $('bairro').value =
+        item?.bairro || '';
+
+      $('cidade').value =
+        item?.cidade || '';
+
+      $('celular').value =
+        item?.celular || '';
+
+      $('instrumento').value =
+        item?.instrumento || '';
+
+      $('camiseta').value =
+        item?.camiseta || '';
+
+      $('fantasia').value =
+        item?.fantasia || '';
+
+      $('calcado').value =
+        item?.calcado || '';
+
+      $('obs').value =
+        item?.obs || '';
+
+    }
+
+
+    function closeModal() {
+
+      $('modal').classList.remove('open');
+
+      $('form').reset();
+
+      $('id').value = '';
+
+    }
+
+
+    $('form').addEventListener(
+      'submit',
+      function(e) {
+
+        e.preventDefault();
+
+
+        const id =
+          $('id').value ||
+          String(Date.now());
+
+
+        const old =
+          data.find(x => x.id === id);
+
+
+        const obj = {
+
+          id,
+
+          nome:
+            $('nome').value.trim(),
+
+          cpf:
+            $('cpf').value.trim(),
+
+          nascimento:
+            $('nascimento').value,
+
+          cep:
+            $('cep').value.trim(),
+
+          rua:
+            $('rua').value.trim(),
+
+          numero:
+            $('numero').value.trim(),
+
+          bairro:
+            $('bairro').value.trim(),
+
+          cidade:
+            $('cidade').value.trim(),
+
+          celular:
+            $('celular').value.trim(),
+
+          instrumento:
+            $('instrumento').value,
+
+          camiseta:
+            $('camiseta').value,
+
+          fantasia:
+            $('fantasia').value,
+
+          calcado:
+            $('calcado').value,
+
+          obs:
+            $('obs').value.trim(),
+
+          presente:
+            old
+              ? old.presente
+              : false
+
+        };
+
+
+        const idx =
+          data.findIndex(
+            x => x.id === id
+          );
+
+
+        if (idx >= 0) {
+
+          data[idx] = obj;
+
+        } else {
+
+          data.push(obj);
+
+        }
+
+
+        persist();
+
+        closeModal();
+
+        render();
+
+      }
+    );
+
+
+    function togglePresenca(id) {
+
+      const x =
+        data.find(
+          x => x.id === id
+        );
+
+
+      if (!x) return;
+
+
+      x.presente =
+        !x.presente;
+
+
+      persist();
+
+      render();
+
+    }
+
+
+    function del(id) {
+
+      if (
+        confirm(
+          'Excluir este ritmista?'
+        )
+      ) {
+
+        data =
+          data.filter(
+            x => x.id !== id
+          );
+
+
+        persist();
+
+        render();
+
+      }
+
+    }
+
+
+    function edit(id) {
+
+      const item =
+        data.find(
+          x => x.id === id
+        );
+
+
+      if (item) {
+
+        openModal(item);
+
+      }
+
+    }
+
+
+    function render() {
+
+      const q =
+        (
+          $('search').value ||
+          ''
+        )
+          .toLowerCase()
+          .trim();
+
+
+      const f =
+        $('filter').value ||
+        '';
+
+
+      const list =
+        data.filter(x => {
+
+          const texto = [
+
+            x.nome,
+            x.cpf,
+            x.celular,
+            x.instrumento,
+            x.apelido
+
+          ]
+            .filter(Boolean)
+            .join(' ')
+            .toLowerCase();
+
+
+          const buscaOk =
+            !q ||
+            texto.includes(q);
+
+
+          const filtroOk =
+            !f ||
+            x.instrumento === f;
+
+
+          return (
+            buscaOk &&
+            filtroOk
+          );
+
+        });
+
+
+      const opts = [
+
+        ...new Set(
+
+          data
+            .map(
+              x => x.instrumento
+            )
+            .filter(Boolean)
+
+        )
+
+      ].sort();
+
+
+      $('filter').innerHTML =
+
+        '<option value="">Todos os instrumentos</option>' +
+
+        opts
+          .map(x =>
+
+            `<option value="${esc(x)}"
+              ${x === f ? 'selected' : ''}>
+              ${esc(x)}
+            </option>`
+
+          )
+          .join('');
+
+
+      $('tbody').innerHTML =
+
+        list.length
+
+          ? list
+              .map(x => `
+
+                <tr>
+
+                  <td>
+
+                    <b>
+                      ${esc(x.nome)}
+                    </b>
+
+                    <br>
+
+                    <small>
+                      ${esc(
+                        x.celular || ''
+                      )}
+                    </small>
+
+                  </td>
+
+
+                  <td>
+                    ${esc(
+                      x.instrumento ||
+                      '—'
+                    )}
+                  </td>
+
+
+                  <td>
+                    ${esc(
+                      x.camiseta ||
+                      '—'
+                    )}
+                  </td>
+
+
+                  <td>
+                    ${esc(
+                      x.fantasia ||
+                      '—'
+                    )}
+                  </td>
+
+
+                  <td>
+                    ${esc(
+                      x.calcado ||
+                      '—'
+                    )}
+                  </td>
+
+
+                  <td>
+
+                    <button
+                      class="${
+                        x.presente
+                          ? 'primary'
+                          : 'secondary'
+                      }"
+                      onclick="togglePresenca('${x.id}')"
+                    >
+
+                      ${
+                        x.presente
+                          ? '✓ Presente'
+                          : 'Marcar'
+                      }
+
+                    </button>
+
+                  </td>
+
+
+                  <td>
+
+                    <div class="actions">
+
+                      <button
+                        class="secondary"
+                        onclick="edit('${x.id}')"
+                      >
+                        Editar
+                      </button>
+
+
+                      <button
+                        class="danger"
+                        onclick="del('${x.id}')"
+                      >
+                        Excluir
+                      </button>
+
+                    </div>
+
+                  </td>
+
+                </tr>
+
+              `)
+              .join('')
+
+          : `
+
+            <tr>
+
+              <td
+                colspan="7"
+                class="empty"
+              >
+                Nenhum ritmista cadastrado.
+              </td>
+
+            </tr>
+
+          `;
+
+
+      $('total').textContent =
+        data.length;
+
+
+      $('presentes').textContent =
+        data.filter(
+          x => x.presente
+        ).length;
+
+
+      $('camisetas').textContent =
+        data.filter(
+          x => x.camiseta
+        ).length;
+
+
+      $('instrumentos').textContent =
+        new Set(
+
+          data
+            .map(
+              x => x.instrumento
+            )
+            .filter(Boolean)
+
+        ).size;
+
+    }
+
+
+    function esc(s) {
+
+      return String(
+        s ?? ''
+      ).replace(
+
+        /[&<>"']/g,
+
+        m => ({
+
+          '&': '&amp;',
+          '<': '&lt;',
+          '>': '&gt;',
+          '"': '&quot;',
+          "'": '&#39;'
+
+        }[m])
+
+      );
+
+    }
+
+
+    function exportar() {
+
+      const rows = [
+
+        [
+
+          'Nome completo',
+          'CPF',
+          'Data de nascimento',
+          'CEP',
+          'Rua',
+          'Número',
+          'Bairro',
+          'Cidade',
+          'Celular',
+          'Instrumento',
+          'Camiseta',
+          'Fantasia',
+          'Calçado',
+          'Presença',
+          'Observações'
+
+        ],
+
+
+        ...data.map(x => [
+
+          x.nome,
+          x.cpf,
+          x.nascimento,
+          x.cep,
+          x.rua,
+          x.numero,
+          x.bairro,
+          x.cidade,
+          x.celular,
+          x.instrumento,
+          x.camiseta,
+          x.fantasia,
+          x.calcado,
+          x.presente
+            ? 'Presente'
+            : 'Não marcado',
+          x.obs
+
+        ])
+
+      ];
+
+
+      const csv = rows
+
+        .map(row =>
+
+          row
+            .map(v =>
+              `"${String(
+                v ?? ''
+              ).replaceAll(
+                '"',
+                '""'
+              )}"`
+            )
+            .join(';')
+
+        )
+
+        .join('\n');
+
+
+      const blob =
+        new Blob(
+
+          [
+            '\ufeff' +
+            csv
+          ],
+
+          {
+            type:
+              'text/csv;charset=utf-8'
+          }
+
+        );
+
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+
+      const a =
+        document.createElement(
+          'a'
+        );
+
+
+      a.href = url;
+
+      a.download =
+        'ritmistas-exercito-dourado.csv';
+
+
+      document.body.appendChild(a);
+
+      a.click();
+
+      a.remove();
+
+      URL.revokeObjectURL(url);
+
+    }
+
+
+    $('search')
+      .addEventListener(
+        'input',
+        render
+      );
+
+
+    $('filter')
+      .addEventListener(
+        'change',
+        render
+      );
+
+
+    $('modal')
+      .addEventListener(
+        'click',
+        function(e) {
+
+          if (
+            e.target ===
+            $('modal')
+          ) {
+
+            closeModal();
+
+          }
+
+        }
+      );
+
+
+    render();
+
+  </script>
+
+</body>
+
+</html>
