@@ -6,7 +6,32 @@
 <meta name="theme-color" content="#111111">
 
 <title>Exército Dourado | Gestão da Bateria</title>
+/* AJUSTE DO FORMULÁRIO */
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.75);
+  display:none;
+  align-items:flex-start;
+  justify-content:center;
+  overflow-y:auto;
+  padding:30px 16px;
+  box-sizing:border-box;
+  z-index:1000;
+}
 
+.modal.open{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:900px;
+  max-height:calc(100vh - 60px);
+  overflow-y:auto;
+  margin:auto 0;
+  box-sizing:border-box;
+}
 <style>
 :root{
   --gold:#d4af37;
